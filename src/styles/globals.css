@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  body {
+    color: black;
+  }
+  header {
+    @apply pt-8 pr-11 pb-10 pl-40 bg-primary;
+  }
+  nav {
+    @apply bg-primary-200 text-white rounded-r-lg h-screen left-0 overflow-hidden top-0 w-[72px] z-20 fixed hover:w-[245px] p-4 hover:ease-in;
+  }
+  main {
+    @apply top-0 pt-2 pr-8 pl-24;
+  }
+  
+}
