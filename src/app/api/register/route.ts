@@ -2,15 +2,6 @@ import {PrismaClient} from '@prisma/client'
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
-export async function GET() {
-  try{
-    const members = await prisma.members.findMany();
-    return NextResponse.json(members, { status: 200 });
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch employees' }, { status: 500 });
-  }
-}
-
 export async function POST(req: Request) {
     try{
         const {firstname, lastname, email, password} = await req.json()
