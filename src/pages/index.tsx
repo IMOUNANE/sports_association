@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { setCookie } from '@/utils/Cookies';
+import { Button } from '@/components/ui/button';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -47,8 +48,8 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Connexion</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
+          <div className="mb-4 w-full">
             <label className="block text-gray-700 mb-2" htmlFor="email">
               Email
             </label>
@@ -61,7 +62,7 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-6 w-full">
             <label className="block text-gray-700 mb-2" htmlFor="password">
               Mot de passe
             </label>
@@ -74,17 +75,17 @@ const Login = () => {
               required
             />
           </div>
-          <button
+          <Button
             type="submit"
-            className="w-full bg-blue-500  hover:bg-primary py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+            className="py-2 px-4 rounded-md transition duration-300 min-w-40"
           >
             Se connecter
-          </button>
+          </Button>
         </form>
-        <div className="mt-1 flex flex-col items-center py-2 px-4 rounded-md hover:bg-primary">
-          <button onClick={handleRegisterRedirect}>
+        <div className="mt-1 flex flex-col items-center py-2 px-4 rounded-md">
+          <Button onClick={handleRegisterRedirect} className='min-w-40'>
             S&rsquo;inscrire
-          </button>
+          </Button>
         </div>
       </div>
     </div>

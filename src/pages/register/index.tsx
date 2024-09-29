@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { User } from "@/types/userType";
 import { useRouter } from 'next/router';
 import { setCookie } from '@/utils/Cookies';
+import { Button } from "@/components/ui/button";
 
 export default function Register() {
 const [newUser,setNewUser] = useState<User | null>(null)
@@ -50,8 +51,8 @@ return (
 		<div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
 			<h2 className="text-2xl font-bold mb-6 text-center">S&rsquo;enregister</h2>
 			{error && <p className="text-red-500 mb-4">{error}</p>}
-			<form onSubmit={handleRegistration}>
-				<div className="mb-4">
+			<form className="flex flex-col items-center w-full" onSubmit={handleRegistration}>
+				<div className="mb-4 w-full">
 					<div className="mb-6">
 						<label className="block text-gray-700 mb-2" htmlFor="firstname">
 							Fisrtname
@@ -118,18 +119,18 @@ return (
 						/>
 					</div>
 				</div>
-				<button
+				<Button
 					type="submit"
-					className="w-full bg-blue-500  hover:bg-primary py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+					className="py-2 px-4 rounded-md transition duration-300 min-w-40"
 					>
 					S&rsquo;inscrire
-				</button>
+				</Button>
 			</form>
-			<div className="mt-1 flex flex-col items-center py-2 px-4 rounded-md hover:bg-primary">
-          <button onClick={()=>{router.push('/')}}>
-            Se connecter
-          </button>
-        </div>
+			<div className="mt-1 flex flex-col items-center py-2 px-4 rounded-md">
+				<Button className="min-w-40" onClick={()=>{router.push('/')}}>
+				Se connecter
+				</Button>
+			</div>
 		</div>
 	</div>
 )
