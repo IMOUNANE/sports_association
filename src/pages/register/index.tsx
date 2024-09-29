@@ -1,45 +1,48 @@
 import React, { useState } from "react";
 import { User } from "@/types/userType";
 import { useRouter } from 'next/router';
-
+import { setCookie } from '@/utils/Cookies';
 
 export default function Register() {
 const [newUser,setNewUser] = useState<User | null>(null)
 const [error, setError] = useState<string | null>(null);
 const router = useRouter();
-const handleRegistration= async ()=>{
+const handleRegistration= async (e:React.FormEvent<HTMLFormElement>)=>{
+	e.preventDefault();
+
 	if(newUser?.password !== newUser?.confirmPassword){
 		setError('Les mots de passe ne correspondent pas');
 		return;
-	}
-	try {
-		const res = await fetch('/api/register', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({	
-				firstname: newUser?.firstname,
-				lastname: newUser?.lastname,
-				email: newUser?.email,
-				password: newUser?.password
-			}),
-		});
-		if (res) {
-			const data = await res.json();
-			console.log(data)
-			if(data.user) {
-				router.push('/dashboard');
-			}else{
-				setError(data.error);
+	}else{
+		try {
+			const res = await fetch('/api/register', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({	
+					firstname: newUser?.firstname,
+					lastname: newUser?.lastname,
+					email: newUser?.email,
+					password: newUser?.password
+				}),
+			});
+			if (res) {
+				const data = await res.json();
+				if(data.token) {
+					setCookie('token', data.token);
+					setCookie('user', data.user);
+					 router.push('/dashboard'); 
+				}else{
+					setError(data.error);
+				}
+			} else {
+				console.log("error",res)
 			}
-		} else {
-			console.log("error",res)
+		} catch {
+			setError('Une erreur s\'est produite');
 		}
-	} catch {
-		setError('Une erreur s\'est produite');
 	}
-
 }
 
 return (
@@ -122,6 +125,11 @@ return (
 					S&rsquo;inscrire
 				</button>
 			</form>
+			<div className="mt-1 flex flex-col items-center py-2 px-4 rounded-md hover:bg-primary">
+          <button onClick={()=>{router.push('/')}}>
+            Se connecter
+          </button>
+        </div>
 		</div>
 	</div>
 )

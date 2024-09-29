@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 export default function Menu() {
   const router = useRouter();
   const { pathname } = router;
-  console.log('test',pathname ,MENU_NAVIGATION[0].label )
+
   return (
     <nav className="border border-solid pt-20">
       {/*

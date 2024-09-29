@@ -1,17 +1,27 @@
 import type { AppProps } from "next/app";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RootLayout from "@/components/Layout";
-import { useRouter } from "next/router";
 import "../styles/globals.css";
+import { getCookie } from 'cookies-next';
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const isAuth= getCookie('token');
+	const [isLoading, setIsLoading] = useState(true);
 
-  const isLoginPage = router.pathname === "/" || router.pathname === "/register";
+  useEffect(() => {		
+		if(!isAuth) router.push("/")
+		setIsLoading(false);
+	},[isAuth])
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
   return (
     <>
-      {isLoginPage ? (
+      {!isAuth ? (
         <Component {...pageProps} />
       ) : (
         <RootLayout>

@@ -30,5 +30,8 @@
   main {
     @apply top-0 pt-2 pr-8 pl-24;
   }
+  h1{
+    @apply text-2xl font-bold;
+  }
   
 }

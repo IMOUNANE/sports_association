@@ -2,6 +2,7 @@
 // pages/login.js
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { setCookie } from '@/utils/Cookies';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,17 +23,16 @@ const Login = () => {
       });
       if (res) {
         const data = await res.json();
-        if(data.user) {
+        if(data.token) {
+          setCookie('token', data.token);
+          setCookie('user', data.user);
           router.push('/dashboard');
         }else{
           setError(data.error);
         }
       
-
-        // Rediriger vers la page d'accueil ou autre page après connexion réussie
       } else {
        console.log("error",res)
-     /*    setError(errorData.message); */
       }
     } catch {
       setError('Une erreur s\'est produite');
