@@ -1,7 +1,7 @@
 import {PrismaClient} from '@prisma/client'
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { generateToken } from '@/lib/jwt';
 const prisma = new PrismaClient();
 export async function POST(req: Request) {
     try{
@@ -25,11 +25,7 @@ export async function POST(req: Request) {
             where: { email: email },
         });
         if(user){
-            token = jwt.sign(
-                { id: user.id, email: user.email }, 
-                process.env.JWT_SECRET,            
-                { expiresIn: '1h' }                
-            );   
+            token = generateToken(user)
         }
        
         return NextResponse.json( {user:  JSON.stringify(newMember), token} , {status: 201})

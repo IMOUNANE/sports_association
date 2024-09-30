@@ -3,8 +3,12 @@ import { getCookie, deleteCookie } from 'cookies-next';
 import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 export default function Header() {
+	let user = null;
 	const route = useRouter()
-	const user = JSON.parse(getCookie('user'))
+	const userCookie = getCookie('user');
+	if(userCookie){
+		user = JSON.parse(userCookie);
+	}
 	const logout = () => {
 		deleteCookie("token")
 		deleteCookie("user")

@@ -1,7 +1,7 @@
 import {PrismaClient} from '@prisma/client'
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { generateToken } from '@/lib/jwt';
 
 
 const prisma = new PrismaClient();
@@ -20,13 +20,9 @@ export async function POST(req: Request, ) {
         if (!isPasswordValid) {
             return NextResponse.json({ error: 'Mot de passe incorrect' });
         }
-        const token = jwt.sign(
-            { id: user.id, email: user.email }, 
-            process.env.JWT_SECRET,            
-            { expiresIn: '1h' }                
-        );
+        const token = generateToken(user)
           
-        return NextResponse.json({ message: 'Connexion réussie', token, user: JSON.stringify({id: user.id, email: user.email, firstname: user.firstname, lastname:user.lastname}) });
+        return NextResponse.json({ message: 'Connexion réussie', token, user: JSON.stringify({id: user.id, email: user.email, firstname: user.firstname, lastname: user.lastname, contribution: user.contribution}) });
     }catch{
         return NextResponse.json({ error: 'Connection error' }, { status: 500 });
     }

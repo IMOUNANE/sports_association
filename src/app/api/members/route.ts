@@ -1,17 +1,26 @@
 import {PrismaClient} from '@prisma/client'
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import { authenticateToken } from '@/app/middleware/auth';
 const prisma = new PrismaClient();
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const authResult = authenticateToken(req);
+  if (authResult instanceof NextResponse) {
+    return authResult;
+  }
   try{
     const members = await prisma.members.findMany();
-    return NextResponse.json(members, { status: 200 });
+    return NextResponse.json({data:members}, { status: 200 });
   } catch {
     return NextResponse.json({ error: 'Failed to fetch employees' }, { status: 500 });
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+    const authResult = authenticateToken(req);
+    if (authResult instanceof NextResponse) {
+      return authResult;
+    }
     try{
         const {firstname, lastname, email, password} = await req.json()
         const hashedPassword = await bcrypt.hash(password, 10);
