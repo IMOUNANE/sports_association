@@ -20,10 +20,13 @@ export async function GET(req: NextRequest) {
             course = await prisma.courses.findMany({
                 where: { id: Number(id) } 
             })
+            const userSubscription = await prisma.subscribe.findMany({
+                where:{member_id: authResult.id, course_id: course[0].id}  
+            })
+            return NextResponse.json({ message: 'Cour', course: course, userSubscription:userSubscription}, { status: 200 });
         }
      
   
-        return NextResponse.json({ message: 'Cour', course: course}, { status: 200 });
     }catch{
         return NextResponse.json({ error: 'Connection error' }, { status: 500 });
     }
