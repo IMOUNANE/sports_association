@@ -13,7 +13,16 @@ pnpm dev
 # or
 bun dev
 ```
-
+create .env with this value 
+```
+ENV=dev
+DOMAIN = localhost
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="YOUR_KEY"
+NEXT_PUBLIC_EMAIL_SERVICE_ID="YOUR_KEY"
+NEXT_PUBLIC_EMAIL_SERVICE_TEMPLATE_ID="YOUR_KEY"
+NEXT_PUBLIC_EMAIL_PUBLIC_KEY=""
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
