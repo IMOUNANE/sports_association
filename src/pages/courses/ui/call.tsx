@@ -9,6 +9,7 @@ export default function Call({ course }: { course: Course | null }) {
 	const [subscribers, setSubscribers] = useState([]);
 	const [presentStatusMembers, setPresentStatusMembers] = useState([]);
 	const [presentStatus, setPresentStatus] = useState(false);
+	console.log("course", course);
 	const getSubscibers = async () => {
 		const res = await fetch("/api/subscribe", {
 			method: "GET",
@@ -50,6 +51,7 @@ export default function Call({ course }: { course: Course | null }) {
 			body: JSON.stringify({
 				membersId: presentStatusMembers,
 				course_id: Number(window.location.pathname.split("/")[2]),
+				course_title: course?.title,
 			}),
 		});
 		const response = await res.json();
