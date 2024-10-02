@@ -3,7 +3,7 @@ import type { Course } from "@/types/courseType";
 import { getCookie } from "cookies-next";
 import { toast } from "sonner";
 import DetailCourse from "../ui/detailCourse";
-import Call from "../ui/Call";
+import Call from "../ui/call";
 export default function CourseDetail() {
 	const user = getCookie("user") ? JSON.parse(getCookie("user")) : null;
 
@@ -24,7 +24,6 @@ export default function CourseDetail() {
 			toast.error("Une erreur s'est produite");
 		} else {
 			const response = await res.json();
-			console.log("response", response);
 			setDisplayButton(
 				response.userSubscription?.length === 0 &&
 					response.course?.[0]?.owner !== user?.id,

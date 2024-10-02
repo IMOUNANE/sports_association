@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { type NextRequest, NextResponse } from "next/server";
 import { authenticateToken } from "@/app/middleware/auth";
-import sendMail from "@/utils/Mail";
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
@@ -94,23 +93,6 @@ export async function PATCH(req: NextRequest) {
 				data: {
 					presentStatus: true,
 				},
-			});
-			const users = await prisma.members.findMany({
-				where: {
-					id: {
-						in: request.membersId,
-					},
-				},
-				select: {
-					firstname: true,
-					lastname: true,
-					email: true,
-				},
-			});
-			users.map((user) => {
-				console.log("request.course_id", request);
-				const dataToSend = { ...user, course: request.course_title };
-				sendMail(dataToSend);
 			});
 		}
 

@@ -1,4 +1,4 @@
-import { User } from "@/types/userType";
+import type { User } from "@/types/userType";
 import jwt from "jsonwebtoken";
 
 const secret = process.env.JWT_SECRET;

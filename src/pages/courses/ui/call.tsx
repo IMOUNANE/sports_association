@@ -5,11 +5,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import type { User } from "@/types/userType";
 import type { Course } from "@/types/courseType";
 import { Button } from "@/components/ui/button";
+import sendMail from "@/utils/Mail";
 export default function Call({ course }: { course: Course | null }) {
 	const [subscribers, setSubscribers] = useState([]);
 	const [presentStatusMembers, setPresentStatusMembers] = useState([]);
 	const [presentStatus, setPresentStatus] = useState(false);
-	console.log("course", course);
 	const getSubscibers = async () => {
 		const res = await fetch("/api/subscribe", {
 			method: "GET",
@@ -59,6 +59,16 @@ export default function Call({ course }: { course: Course | null }) {
 			toast.error("Une erreur s'est produite");
 			setPresentStatus(response.presentStatus);
 		} else {
+			subscribers.map(({ member }: { member: User }) => {
+				if (presentStatusMembers.includes(member?.id)) {
+					sendMail({
+						firstname: member.firstname,
+						lastname: member.lastname,
+						email: member.email,
+						course: course?.title,
+					});
+				}
+			});
 			toast.success("Appel effectué avec succès");
 		}
 	};
