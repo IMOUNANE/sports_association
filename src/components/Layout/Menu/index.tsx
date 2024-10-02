@@ -6,7 +6,9 @@ import { LayoutDashboardIcon, SettingsIcon, TrophyIcon  } from "lucide-react";
 export default function Menu() {
   const router = useRouter();
   const { pathname } = router;
-  const icons = [<LayoutDashboardIcon />, <TrophyIcon />, <SettingsIcon />];
+  const icons = [<LayoutDashboardIcon />, <TrophyIcon />, <SettingsIcon />].map((icon, index) => {
+    return React.cloneElement(icon, { key: index });
+  });
 
   return (
     <nav className="border border-solid pt-20">
