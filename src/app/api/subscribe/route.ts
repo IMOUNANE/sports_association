@@ -11,7 +11,6 @@ export async function GET(req: NextRequest) {
 	try {
 		const subscribers = await prisma.subscribe.findMany({
 			where: { member_id: authResult.id },
-			skip: 0,
 			select: {
 				member: {
 					select: {

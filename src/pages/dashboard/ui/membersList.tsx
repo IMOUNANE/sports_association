@@ -9,7 +9,9 @@ export default function MembersList({
 		<div
 			className={`max-w-4xl p-6 bg-gray-50 rounded-lg shadow-md ${className}`}
 		>
-			<h1 className="text-3xl font-semibold text-center mb-6">Members List</h1>
+			<h1 className="text-3xl font-semibold text-center mb-6">
+				Liste des membres
+			</h1>
 			<ul className="space-y-4">
 				{members?.map((member) => (
 					<li

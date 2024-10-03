@@ -6,7 +6,10 @@ import type { User } from "@/types/userType";
 import type { Course } from "@/types/courseType";
 import { Button } from "@/components/ui/button";
 import sendMail from "@/utils/Mail";
-export default function Call({ course }: { course: Course | null }) {
+export default function Call({
+	course,
+	userSubscription,
+}: { course: Course | null; userSubscription: User[] }) {
 	const [subscribers, setSubscribers] = useState([]);
 	const [presentStatusMembers, setPresentStatusMembers] = useState([]);
 	const [presentStatus, setPresentStatus] = useState(false);
@@ -123,7 +126,7 @@ export default function Call({ course }: { course: Course | null }) {
 					</tr>
 				</thead>
 				<tbody className="bg-white divide-y divide-gray-200">
-					{subscribers.map(({ member }) => (
+					{userSubscription?.map(({ member }) => (
 						<tr key={member?.id}>
 							<td className="px-6 py-4 whitespace-nowrap">
 								<div className="text-sm font-medium text-gray-900">

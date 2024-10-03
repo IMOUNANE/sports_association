@@ -51,10 +51,11 @@ export default function DetailCourse({
 				</p>
 			</div>
 			<div className="flex justify-end">
-				{displayButton && (
+				{displayButton ? (
 					<Button onClick={postSubscription}>S'inscrire au cours</Button>
+				) : (
+					<p> Déjà inscrit</p>
 				)}
-				{!displayButton && course?.owner !== user?.id && <p> Déjà inscrit</p>}
 			</div>
 		</div>
 	);

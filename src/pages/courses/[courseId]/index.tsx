@@ -9,6 +9,7 @@ export default function CourseDetail() {
 
 	const [course, setCourse] = useState<Course | null>(null);
 	const [displayButton, setDisplayButton] = useState(false);
+	const [userSubscription, setUserSubscription] = useState([]);
 	const getCourse = async () => {
 		const res = await fetch(
 			`/api/course?id=${window.location.pathname.split("/")[2]}`,
@@ -24,10 +25,16 @@ export default function CourseDetail() {
 			toast.error("Une erreur s'est produite");
 		} else {
 			const response = await res.json();
-			setDisplayButton(
-				response.userSubscription?.length === 0 &&
-					response.course?.[0]?.owner !== user?.id,
-			);
+			setUserSubscription(response.userSubscription);
+
+			if (
+				response.userSubscription.filter((sub) => sub.member.id === user.id)
+					.length > 0 ||
+				response.course?.[0]?.owner === user?.id
+			)
+				setDisplayButton(false);
+			else setDisplayButton(true);
+
 			setCourse(response.course?.[0]);
 		}
 	};
@@ -47,7 +54,7 @@ export default function CourseDetail() {
 			</div>
 			{course?.owner === user?.id && (
 				<div className="w-full mx-auto bg-white p-6 rounded-lg shadow-md">
-					<Call course={course} />
+					<Call course={course} userSubscription={userSubscription} />
 				</div>
 			)}
 		</main>

@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
 		});
 		const userSubscription = await prisma.subscribe.findMany({
 			where: { course_id: course[0].id },
+			select: { member: true },
 		});
 		return NextResponse.json(
 			{ message: "Cour", course: course, userSubscription: userSubscription },
